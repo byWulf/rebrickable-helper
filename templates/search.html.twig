@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}
+    Search
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            {{ form_start(searchForm, {attr: {class: 'row row-cols-lg-auto g-3 align-items-center'}}) }}
+                <div class="col-12">
+                    {{ form_widget(searchForm.query) }}
+                </div>
+
+                <div class="col-12">
+                    {{ form_row(searchForm.submit) }}
+                </div>
+            {{ form_end(searchForm) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if results is not null %}
+                <div class="row row-cols-lg-15 row-cols-md-10 row-cols-sm-5 g-1">
+                    {% for part in results.results|filter(part => 'pr' not in part.part_num) %}
+                        <div class="col">
+                            <div class="card h-100" data-id="{{ part.part_num }}">
+                                <img src="{{ part.part_img_url|default('https://cdn.rebrickable.com/media/thumbs/nil.png/85x85p.png')}}" class="card-img-top">
+                                <div class="text-center">{{ part.part_num }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

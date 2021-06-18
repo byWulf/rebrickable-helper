@@ -1,0 +1,14 @@
+@import "~bootstrap/scss/bootstrap";
+
+@media (min-width: 768px) {
+  .row-cols-md-10 > * {
+    flex: 0 0 auto;
+    width: 10%;
+  }
+}
+@media (min-width: 992px) {
+  .row-cols-lg-15 > * {
+    flex: 0 0 auto;
+    width: 6.666667%;
+  }
+}
