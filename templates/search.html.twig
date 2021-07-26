@@ -24,10 +24,12 @@
                 <div class="row row-cols-lg-15 row-cols-md-10 row-cols-sm-5 g-1">
                     {% for part in results.results|filter(part => 'pr' not in part.part_num) %}
                         <div class="col">
-                            <div class="card h-100" data-id="{{ part.part_num }}">
-                                <img src="{{ part.part_img_url|default('https://cdn.rebrickable.com/media/thumbs/nil.png/85x85p.png')}}" class="card-img-top">
-                                <div class="text-center">{{ part.part_num }}</div>
-                            </div>
+                            <a href="{{ path('part', {partNumber: part.part_num}) }}">
+                                <div class="card h-100 clickable-card">
+                                    <img src="{{ part.part_img_url|default('https://cdn.rebrickable.com/media/thumbs/nil.png/85x85p.png')}}" class="card-img-top">
+                                    <div class="text-center">{{ part.part_num }}</div>
+                                </div>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>

@@ -25,6 +25,14 @@ framework:
                 headers:
                     Authorization: 'key %env(REBRICKABLE_KEY)%'
 
+                retry_failed:
+                    enabled: true
+            bricks_and_pieces_lego.client:
+                base_uri: 'https://bricksandpieces.services.lego.com'
+
+            pick_a_brick_lego.client:
+                base_uri: 'https://www.lego.com'
+
 when@test:
     framework:
         test: true

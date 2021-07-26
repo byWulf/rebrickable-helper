@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}
+    Diff
+{% endblock %}
+
+{% block body %}
+    <p>{{ overlapping|length }} lots found. {{ overlapping|filter(o => o.incomingQty >= o.neededQty)|length }} of them are complete.</p>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>ItemId</th>
+            <th>Name</th>
+            <th colspan="2">Color</th>
+            <th>Needed qty</th>
+            <th>Incoming qty</th>
+            <th>Estimated value</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% set priceSum = 0 %}
+            {% for item in overlapping %}
+                <tr>
+                    <td>
+                        <img src="{{ item.colorDetails.part_img_url|default(item.part.part_img_url|default('https://cdn.rebrickable.com/media/thumbs/nil.png/85x85p.png')) }}" style="height: 100px;">
+                    </td>
+                    <td>
+                        {{ item.itemId }}
+                        {% if item.itemId != item.neededItemId %} ({{ item.neededItemId }}){% endif %}
+                    </td>
+                    <td>
+                        {{ item.part.name|default('???') }}
+                    </td>
+                    <td style="width: 30px; background-color: #{{ colors[item.color].rgb|default('fff') }};">
+                    </td>
+                    <td>
+                        {{ colors[item.color].name|default('??? (' ~ item.color ~ ')') }}
+                    </td>
+                    <td>
+                        {{ item.neededQty }}
+                    </td>
+                    <td style="background-color: {{ item.incomingQty >= item.neededQty ? '#afa' : 'transparent' }};">
+                        {{ item.incomingQty }}
+                    </td>
+                    <td>
+                        {{ item.price * min(item.neededQty, item.incomingQty) }}
+                        {% set priceSum = priceSum + (item.price * min(item.neededQty, item.incomingQty)) %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Sum: {{ priceSum }}</th>
+        </tfoot>
+    </table>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}
+     {{ part.part_num }} - {{ part.name }}
+{% endblock %}
+
+{% block body %}
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><button class="nav-link active" type="button">{{ part.part_num }}</button></li>
+        {% for mold in part.molds %}
+            <li class="nav-item"><a class="nav-link" href="{{ path('part', {partNumber: mold}) }}">{{ mold }}</a></li>
+        {% endfor %}
+        {% for alternate in part.alternates %}
+            <li class="nav-item"><a class="nav-link" href="{{ path('part', {partNumber: alternate}) }}">{{ alternate }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <div class="row">
+        <div class="col">
+            <img src="{{ part.part_img_url }}">
+        </div>
+    </div>
+    <div class="row row-cols-lg-15 row-cols-md-10 row-cols-sm-5 g-1">
+        {% for color in colors.results %}
+            <div class="col">
+                <div class="card h-100 clickable-card">
+                    <img src="{{ color.part_img_url|default('https://cdn.rebrickable.com/media/thumbs/nil.png/85x85p.png')}}" class="card-img-top">
+                    <div class="text-center">{{ color.color_name }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {{ dump(part) }}
+    {{ dump(colors) }}
+{% endblock %}

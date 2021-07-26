@@ -12,3 +12,10 @@
     width: 6.666667%;
   }
 }
+
+.clickable-card {
+  cursor: pointer;
+  &:hover {
+    background-color: #cef;
+  }
+}
